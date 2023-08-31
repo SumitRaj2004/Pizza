@@ -42,5 +42,8 @@ router.post("/create-checkout-session", auth, async(req, res) => {
     res.json({id : session.id}); 
 })
 
+router.post("/webhook-checkout", async(req, res) => {
+    console.log("yes something is workin fine i think")
+})
 
 export default router;
