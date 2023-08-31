@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Menu</title>
+</head>
+<body>
+    {{> navbar}}
+    <section class="menu-section">
+        <div class="container">
+            <h1 class="menu-title">Menu</h1>
+            <div class="menu-container">
+                {{#each menu}}
+                <div class="menu">
+                    <img src="/img/{{this.image}}" alt="">
+                    <h2>{{this.name}}</h2>
+                    <div class="menu-bottom">
+                        <p>₹{{this.price}}</p>
+                        <form action="/cart/{{this.id}}" method="POST">
+                            <button type="submit" class="btn-secondary">Add Now</button>
+                        </form>
+                        {{!-- <a href="/cart/{{this.id}}" class="btn-secondary">Add Now</a> --}}
+                    </div>
+                </div>                        
+                {{/each}} 
+            </div>
+        </div>
+    </section>
+</body>
+</html>

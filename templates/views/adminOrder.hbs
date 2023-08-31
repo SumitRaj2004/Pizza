@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Order : {{order.id}}</title>
+</head>
+<body>
+    <section class="adminOrder-section">
+        <div class="container">
+            <h1 class="adminOrder-id">Order Id : {{order.id}}</h1>
+            <ul class="adminOrder-items">
+                {{#each order.order}}
+                    <li class="adminOrder-item">
+                        <div class="adminOrder-item-product">
+                            <img src="/img/{{this.product.image}}" alt="">
+                            <div>
+                                <h2>{{this.product.name}}</h2>
+                            </div>
+                        </div>
+                        <div class="adminOrder-item-quantity">
+                            <span>{{this.quantity}}pcs</span>
+                        </div>
+                        <h4 class="adminOrder-item-price">₹{{this.price}}</h4>
+                    </li>
+                {{/each}}    
+            </ul>
+            <p class="adminOrder-total">Amount Paid : <span>₹{{totalAmount}}</span></p>
+            <div class="adminOrder-more-details">
+                <p class="adminOrder-username">Name : {{order.owner.name}}</p>
+                <p class="adminOrder-email">Email : {{order.owner.email}}</p>
+                <p class="adminOrder-phone">Phone : {{order.phone}}</p>
+                <p class="adminOrder-address">Address : {{order.address}}</p>
+                <p class="adminOrder-time">Time : {{orderTime}}</p>
+                <p class="adminOrder-payment-type">Payment Mode : {{order.paymentType}}</p>
+                <p class="adminOrder-status">Status : {{order.status}}</p>
+            </div>
+            <form action="/admin/orders/{{order.id}}?_method=PATCH" method="POST" class="adminOrder-updateForm">
+                <p class="adminOrder-updateStatus">
+                    Update Status : 
+                    <select name="status">
+                        <option value="placed" class="{{order.status}}">Placed</option>
+                        <option value="confirmed" class="{{order.status}}">Confirmed</option>
+                        <option value="prepared" class="{{order.status}}">Prepared</option>
+                        <option value="delivered" class="{{order.status}}">Delivered</option>
+                        <option value="completed" class="{{order.status}}">Completed</option>
+                    </select>
+                </p>
+                <input type="submit" class="btn-primary" value="Update"></input>
+            </form>
+        </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+</html>

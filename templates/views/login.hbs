@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Login</title>
+</head>
+<body>
+    {{> navbar}}
+    <section class="login-section">
+        <div class="small-container">
+            <h1 class="login-heading">Login</h1>
+            <form action="/auth/login" method="POST" class="login-form">
+                <input type="email" placeholder="Your Email" name="email">
+                <input type="password" placeholder="Your Password" name="password">
+                <div class="login-bottom">
+                    <a href="/auth/register">Don't have an account?</a>
+                    <input type="submit" value="Login">
+                </div>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Orders</title>
+</head>
+<body>
+    {{> navbar}}
+    <section class="order-section">
+        <div class="container">
+            <h1 class="order-id">Order Id : {{order.id}}</h1>
+            <ul class="order-items">
+                {{#each order.order}}
+                    <li class="order-item">
+                        <div class="order-item-product">
+                            <img src="/img/{{this.product.image}}" alt="">
+                            <div>
+                                <h2>{{this.product.name}}</h2>
+                            </div>
+                        </div>
+                        <div class="order-item-quantity">
+                            <span>{{this.quantity}}pcs</span>
+                        </div>
+                        <h4 class="order-item-price">₹{{this.price}}</h4>
+                    </li>
+                {{/each}}    
+            </ul>
+            <p class="order-total">Amount Paid : <span>₹{{totalAmount}}</span></p>
+            <div class="order-more-details">
+                <p class="order-staus">Status : {{order.status}}</p>
+                <p class="order-payment-type">Payment Mode : {{order.paymentType}}</p>
+                <p class="order-phone">Phone : {{order.phone}}</p>
+                <p class="order-address">Address : {{order.address}}</p>
+                <p class="order-time">Time : {{orderTime}}</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

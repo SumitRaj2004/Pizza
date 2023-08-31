@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Checkout</title>
+</head>
+<body>
+    {{> navbar}}
+    <section class="checkout-section">
+        <div class="small-container">
+            <h1 class="checkout-heading">Details</h1>
+            {{!-- <form action="/orders/{{cart.id}}" method="POST" class="checkout-form" data-cart="{{cart.id}}">
+                <input type="tel" placeholder="Your Phone Number" name="phone" class="phone">
+                <input type="text" placeholder="Your Address" name="address" class="address">
+                <input type="submit" value="Place Order" class="checkout-btn">
+            </form> --}}
+            <form class="checkout-form" data-cart="{{cart.id}}" method="POST">
+                <input type="tel" placeholder="Your Phone Number" name="phone" class="phone">
+                <input type="text" placeholder="Your Address" name="address" class="address">
+                <input type="submit" value="Place Order" class="checkout-btn">
+            </form>
+        </div>
+    </section>
+    <script src="/js/stripe.js" type="module"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+</body>
+</html>

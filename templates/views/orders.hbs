@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Orders</title>
+</head>
+<body>
+    {{> navbar}}
+    <section class="orders-section">
+        <div class="container">
+            <h1>All Orders</h1>
+            <div class="orders">
+                {{#each orders}}
+                <div class="order {{this.status}}">
+                    <p class="order-id">{{this.id}}</p>
+                    <p class="order-time">{{this.createdAt}}</p>
+                    <p class="order-status">{{this.status}}</p>
+                    <a href="/orders/{{this.id}}" class="btn-primary">More Details</a>   
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+</html>
