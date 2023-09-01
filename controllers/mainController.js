@@ -1,5 +1,9 @@
 import Menu from "../models/menuModel.js";
 import Cart from "../models/cartModel.js";
+import { config } from "dotenv";
+config();
+import Stripe from "stripe";
+const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY)
 
 const mainController = {
     renderHome : async(req, res) => {
@@ -159,6 +163,30 @@ const mainController = {
             })
         }
     },
+    createCheckoutSession : async(req, res) => {
+        const {phone, address, cartId} = req.body;
+        const cart  = await Cart.findOne({_id : cartId}).populate("products.product");
+        const lineItems = cart.products.map((product) => ({
+            price_data : {
+                currency : "inr",
+                product_data : {
+                    name : product.product.name,
+                },
+                unit_amount : (product.price * 100)/product.quantity
+            },
+            quantity : product.quantity
+        }))
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: lineItems,
+            mode: 'payment',
+            success_url: `${process.env.DOMAIN}/orders`,
+            cancel_url: `${process.env.DOMAIN}/cancel`,
+          });
+        
+        res.json({id : session.id}); 
+    },
+
     cancel : async(req, res) => {
         res.render("message", {
             title : "Failed",
@@ -167,8 +195,18 @@ const mainController = {
             linkTitle : "Go to cart"
         })
     },
-    success : async(req, res) => {
-        res.send("payment successfull")
+
+    webhookCheckout : async(req, res) => {
+        const signature = req.headers['stripe-signature'];
+        try{
+            const event = stripe.webhooks.constructEvent(req.body, signature, process.env.STRIPE_WEBHOOK_SECRET);
+            if (event.type === "checkout.session.completed"){
+                console.log(event.data.object)
+            }
+            res.status(200).end()
+        }catch(err){
+            return res.status(400).send(`Webhook Error : ${err.message}`);
+        }
     }
 }
 
