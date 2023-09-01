@@ -25,17 +25,9 @@ const viewsPath = path.join(__dirname, "./templates/views")
 const partialsPath = path.join(__dirname, "./templates/partials")
 app.use(cors())
 app.options("*", cors())
-app.use(express.json());
-app.use(express.static(publicPath));
-app.use(express.urlencoded({extended : false}));
-app.use(methodOverride("_method"));
-app.set("view engine", "hbs");
-app.set("views", viewsPath);
-hbs.registerPartials(partialsPath);
-app.use(cookieParser())
 
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY)
-app.post("/webhook-checkout", async(req, res) => {
+app.post("/webhook-checkout", express.raw({type : "application/json"}), async(req, res) => {
     console.log("something should work..")
     const signature = req.headers["stripe-signature"];
     let event;
@@ -46,6 +38,16 @@ app.post("/webhook-checkout", async(req, res) => {
         return "something"
     }
 })
+
+app.use(express.json());
+app.use(express.static(publicPath));
+app.use(express.urlencoded({extended : false}));
+app.use(methodOverride("_method"));
+app.set("view engine", "hbs");
+app.set("views", viewsPath);
+hbs.registerPartials(partialsPath);
+app.use(cookieParser())
+
 
 app.use("/", mainRouter)
 app.use("/auth", authRouter)
