@@ -34,6 +34,18 @@ app.set("views", viewsPath);
 hbs.registerPartials(partialsPath);
 app.use(cookieParser())
 
+const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY)
+app.post("/webhook-checkout", async(req, res) => {
+    const signature = req.headers["stripe-signature"];
+    let event;
+    try{
+        event = stripe.webhooks.constructEvent(req.body, signature, process.env.STRIPE_WEBHOOK_SECRET);
+        console.log(event)
+    }catch(err){
+        return "something"
+    }
+    console.log("yes something is workin fine i think")
+})
 
 app.use("/", mainRouter)
 app.use("/auth", authRouter)

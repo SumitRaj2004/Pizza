@@ -42,16 +42,6 @@ router.post("/create-checkout-session", auth, async(req, res) => {
     res.json({id : session.id}); 
 })
 
-router.post("/webhook-checkout", async(req, res) => {
-    const signature = req.headers["stripe-signature"];
-    let event;
-    try{
-        event = stripe.webhooks.constructEvent(req.body, signature, process.env.STRIPE_WEBHOOK_SECRET);
-        console.log(event)
-    }catch(err){
-        return "something"
-    }
-    console.log("yes something is workin fine i think")
-})
+
 
 export default router;
