@@ -201,6 +201,7 @@ const mainController = {
     },
 
     webhookCheckout : async(req, res) => {
+        console.log("something in the way")
         const signature = req.headers['stripe-signature'];
         try{
             const event = stripe.webhooks.constructEvent(req.body, signature, process.env.STRIPE_WEBHOOK_SECRET);
