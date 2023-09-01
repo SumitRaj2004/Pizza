@@ -180,6 +180,8 @@ const mainController = {
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: lineItems,
+            client_reference_id : cartId,
+            customer_email : req.user.email,
             mode: 'payment',
             success_url: `${process.env.DOMAIN}/orders`,
             cancel_url: `${process.env.DOMAIN}/cancel`,
