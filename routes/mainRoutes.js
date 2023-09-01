@@ -17,7 +17,7 @@ router.get("/cancel", auth, mainController.cancel);
 // create-checkout-session (stripe routes)
 
 router.post("/create-checkout-session", auth, mainController.createCheckoutSession);
-app.post("/webhook-checkout", auth, mainController.webhookCheckout);
+router.post("/webhook-checkout", auth, mainController.webhookCheckout);
 
 
 
