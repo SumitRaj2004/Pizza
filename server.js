@@ -14,6 +14,7 @@ import mainRouter from "./routes/mainRoutes.js"
 import authRouter from "./routes/authRoutes.js"
 import orderRouter from "./routes/orderRoutes.js";
 import adminRouter from "./routes/adminRoutes.js";
+import mainController from "./controllers/mainController.js";
 import cookieParser from "cookie-parser";
 import methodOverride from "method-override";
 
@@ -26,6 +27,9 @@ const partialsPath = path.join(__dirname, "./templates/partials")
 
 app.use(cors())
 app.options("*", cors())
+
+app.post("/webhook-checkout", express.raw({ type: 'application/json' }), mainController.webhookCheckout);
+
 app.use(express.json());
 app.use(express.static(publicPath));
 app.use(express.urlencoded({extended : false}));
