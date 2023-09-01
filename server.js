@@ -23,22 +23,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const publicPath = path.join(__dirname, "./public")
 const viewsPath = path.join(__dirname, "./templates/views")
 const partialsPath = path.join(__dirname, "./templates/partials")
+
 app.use(cors())
 app.options("*", cors())
-
-const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY)
-app.post("/webhook-checkout", express.raw({type : "application/json"}), async(req, res) => {
-    console.log("something should work..")
-    const signature = req.headers["stripe-signature"];
-    let event;
-    try{
-        event = stripe.webhooks.constructEvent(req.body, signature, process.env.STRIPE_WEBHOOK_SECRET);
-        console.log(event)
-    }catch(err){
-        return "something"
-    }
-})
-
 app.use(express.json());
 app.use(express.static(publicPath));
 app.use(express.urlencoded({extended : false}));
