@@ -2,7 +2,6 @@ import express from "express"
 import mainController from "../controllers/mainController.js";
 import auth from "../middlewares/authMiddleware.js";
 import Cart from "../models/cartModel.js";
-// import disableExpressJsonMiddleware from "../middlewares/disableExpressJsonMiddleware.js";
 
 
 const router = new express.Router();
@@ -18,8 +17,6 @@ router.get("/cancel", auth, mainController.cancel);
 // create-checkout-session (stripe routes)
 
 router.post("/create-checkout-session", auth, mainController.createCheckoutSession);
-// router.post("/webhook-checkout", disableExpressJsonMiddleware, express.raw({ type: 'application/json' }), mainController.webhookCheckout);
-
 
 
 export default router;

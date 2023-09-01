@@ -3,29 +3,8 @@ import Cart from "../models/cartModel.js"
 import Order from "../models/orderModel.js"
 
 const orderController = {
-    orders : async(req, res) => {
-        const {cartId, phone, address} = req.query;
-        try{
-            const cart = await Cart.findOne({owner : req.user.id, _id : cartId});
-            const order = new Order({
-                owner : req.user.id,
-                order : cart.products,
-                phone : phone,
-                address : address,
-            })
-            await order.save();
-            // after placing an order we need to clear the cart items
-            await Cart.findByIdAndDelete(cartId);
-            res.redirect("/orders")
-        }catch(err){
-            console.log(err.message)
-            res.render("message", {
-                title : "Error",
-                message : "Page not found",
-                link : "/cart",
-                linkTitle : "Go to Cart"
-            })
-        }
+    createOrder : async(session) => {
+        console.log(session)
     },
 
     renderOrders : async(req, res) => {

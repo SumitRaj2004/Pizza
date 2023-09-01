@@ -1,13 +1,10 @@
 import Menu from "../models/menuModel.js";
 import Cart from "../models/cartModel.js";
+import orderController from "./orderController.js";
 import { config } from "dotenv";
 config();
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY)
-
-function sayHello(){
-    console.log("hello world please work")
-}
 
 const mainController = {
     renderHome : async(req, res) => {
@@ -201,14 +198,12 @@ const mainController = {
     },
 
     webhookCheckout : async(req, res) => {
-        console.log("something in the way")
         const signature = req.headers['stripe-signature'];
         try{
             const event = stripe.webhooks.constructEvent(req.body, signature, process.env.STRIPE_WEBHOOK_SECRET);
-            console.log(event === "checkout.session.completed");
             if (event.type === "checkout.session.completed"){
-                console.log(event.data.object)
-                sayHello()
+                const session = event.data.object
+                orderController.createOrder(session)
             }
             res.status(200).end()
         }catch(err){
