@@ -35,7 +35,7 @@ hbs.registerPartials(partialsPath);
 app.use(cookieParser())
 
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY)
-app.post("/webhook-checkout", express.raw({type : "application/json"}), async(req, res) => {
+app.post("/webhook-checkout", async(req, res) => {
     console.log("something should work..")
     const signature = req.headers["stripe-signature"];
     let event;
