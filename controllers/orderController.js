@@ -1,10 +1,21 @@
 import moment from "moment";
 import Cart from "../models/cartModel.js"
 import Order from "../models/orderModel.js"
+import User from "../models/userModel.js"
 
 const orderController = {
     createOrder : async(session) => {
-        console.log(session)
+        const {customer_email, client_reference_id, metadata} = session;
+        const {phone, address} = metadata;
+        console.log(customer_email, client_reference_id, phone, address)
+        // const user = await User.findOne({email : customer_email});
+        // const cart = await Cart.findOne({_id : client_reference_id});
+        // const order = new Order({
+        //     owner : user.id,
+        //     order : cart.products,
+        //     phone : metadata.phone,
+        //     address : metadata.address
+        // })   
     },
 
     renderOrders : async(req, res) => {
