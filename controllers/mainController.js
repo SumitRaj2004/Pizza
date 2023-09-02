@@ -182,8 +182,7 @@ const mainController = {
             line_items: lineItems,
             client_reference_id : cartId,
             customer_email : req.user.email,
-            // just need to save phone and address here in session
-            hello : phone,
+            shipping_details : phone,
             mode: 'payment',
             success_url: `${process.env.DOMAIN}/orders`,
             cancel_url: `${process.env.DOMAIN}/cancel`,
