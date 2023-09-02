@@ -8,14 +8,16 @@ const orderController = {
         const {customer_email, client_reference_id, metadata} = session;
         const {phone, address} = metadata;
         console.log(customer_email, client_reference_id, phone, address)
-        // const user = await User.findOne({email : customer_email});
-        // const cart = await Cart.findOne({_id : client_reference_id});
-        // const order = new Order({
-        //     owner : user.id,
-        //     order : cart.products,
-        //     phone : metadata.phone,
-        //     address : metadata.address
-        // })   
+        const user = await User.findOne({email : customer_email});
+        const cart = await Cart.findOne({_id : client_reference_id});
+        const order = new Order({
+            owner : user.id,
+            order : cart.products,
+            address : metadata.address,
+            phone : metadata.phone
+        })   
+       await order.save();
+       await Cart.findByIdAndDelete(client_reference_id); 
     },
 
     renderOrders : async(req, res) => {
