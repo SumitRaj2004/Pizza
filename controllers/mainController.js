@@ -182,8 +182,11 @@ const mainController = {
             line_items: lineItems,
             client_reference_id : cartId,
             customer_email : req.user.email,
-            shipping_details : phone,
             mode: 'payment',
+            metadata : {
+                phone : phone,
+                address : address
+            },
             success_url: `${process.env.DOMAIN}/orders`,
             cancel_url: `${process.env.DOMAIN}/cancel`,
           });
